@@ -10,25 +10,7 @@
 package org.openmrs.api.impl;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.Allergen;
-import org.openmrs.Allergies;
-import org.openmrs.Allergy;
-import org.openmrs.Concept;
-import org.openmrs.Encounter;
-import org.openmrs.Location;
-import org.openmrs.Obs;
-import org.openmrs.Order;
-import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
-import org.openmrs.PatientIdentifierType;
-import org.openmrs.PatientProgram;
-import org.openmrs.Person;
-import org.openmrs.PersonAddress;
-import org.openmrs.PersonAttribute;
-import org.openmrs.PersonName;
-import org.openmrs.Relationship;
-import org.openmrs.User;
-import org.openmrs.Visit;
+import org.openmrs.*;
 import org.openmrs.api.APIException;
 import org.openmrs.api.BlankIdentifierException;
 import org.openmrs.api.DuplicateIdentifierException;
@@ -118,6 +100,33 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 	 */
 	@Override
 	public Patient savePatient(Patient patient) throws APIException {
+
+		//************work starts
+
+		//todo
+		//pass unknown att to core - is paasing along regCore as a separate para is ok?
+
+		if (unknown != null && unknown) {
+			PersonName name = new PersonName();
+			name.setFamilyName("UNKNOWN");
+			name.setGivenName("UNKNOWN");
+			patient.addName(name);
+
+			//patient.addAttribute(new PersonAttribute(emrApiProperties.getUnknownPatientPersonAttributeType(), "true"));
+			//work on addingAttribute - core can not depend on the relevant module. therefore rewrite that...
+			PersonAttributeType type = null;
+			type = this.personService.getPersonAttributeTypeByName("Unknown patient");
+			if(type == null) {
+				throw new IllegalStateException("Configuration required: Unknown patient");
+			} else {
+				return type;
+			}
+			//resolve errors
+
+		}
+
+
+		//************work ends
 		requireAppropriatePatientModificationPrivilege(patient);
 
 		if (!patient.getVoided() && patient.getIdentifiers().size() == 1) {
