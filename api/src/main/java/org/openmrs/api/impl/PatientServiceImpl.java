@@ -98,6 +98,10 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 	/**
 	 * @see org.openmrs.api.PatientService#savePatient(org.openmrs.Patient)
 	 */
+	//nipun
+	PersonService personService = new PersonServiceImpl();
+	//**nipun - end
+
 	@Override
 	public Patient savePatient(Patient patient) throws APIException {
 
@@ -113,16 +117,16 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 			patient.addName(name);
 
 			//patient.addAttribute(new PersonAttribute(emrApiProperties.getUnknownPatientPersonAttributeType(), "true"));
-			//work on addingAttribute - core can not depend on the relevant module. therefore rewrite that...
+			//work on addingAttribute - core can not depend on the relevant module. therefore rewriting that...
 			PersonAttributeType type = null;
 			type = this.personService.getPersonAttributeTypeByName("Unknown patient");
 			if(type == null) {
 				throw new IllegalStateException("Configuration required: Unknown patient");
 			} else {
-				return type;
+				//return type;
+				patient.addAttribute(new PersonAttribute(type, "true");
 			}
 			//resolve errors
-
 		}
 
 
