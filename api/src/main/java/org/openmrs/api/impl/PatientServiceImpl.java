@@ -109,12 +109,12 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 
 		//todo
 		//pass unknown att to core - is paasing along regCore as a separate para is ok?
-
-		if (unknown != null && unknown) {
-			PersonName name = new PersonName();
+		PersonName name = new PersonName();
+		//if (unknown != null && unknown) {
+		if (patient.isUnknown()) {
 			name.setFamilyName("UNKNOWN");
 			name.setGivenName("UNKNOWN");
-			patient.addName(name);
+
 
 			//patient.addAttribute(new PersonAttribute(emrApiProperties.getUnknownPatientPersonAttributeType(), "true"));
 			//work on addingAttribute - core can not depend on the relevant module. therefore rewriting that...
@@ -124,10 +124,11 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 				throw new IllegalStateException("Configuration required: Unknown patient");
 			} else {
 				//return type;
-				patient.addAttribute(new PersonAttribute(type, "true");
+				patient.addAttribute(new PersonAttribute(type, "true"));
 			}
 			//resolve errors
 		}
+		patient.addName(name);
 
 
 		//************work ends

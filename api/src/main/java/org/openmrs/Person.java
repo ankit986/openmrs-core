@@ -29,6 +29,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.Transient;
+
 /**
  * A Person in the system. This can be either a small person stub, or indicative of an actual
  * Patient in the system. This class holds the generic person things that both the stubs and
@@ -90,6 +92,9 @@ public class Person extends BaseOpenmrsData {
 
 	@Field
 	private boolean isPatient;
+
+	@Transient
+			private boolean unknown;
 	
 	/**
 	 * Convenience map from PersonAttributeType.name to PersonAttribute.<br>
@@ -1064,5 +1069,12 @@ public class Person extends BaseOpenmrsData {
 		setPersonId(id);
 		
 	}
-	
+
+	public boolean isUnknown() {
+		return unknown;
+	}
+
+	public void setUnknown(boolean unknown) {
+		this.unknown = unknown;
+	}
 }
