@@ -26,6 +26,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.openmrs.util.OpenmrsUtil;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.Transient;
+
 /**
  * A Person in the system. This can be either a small person stub, or indicative of an actual
  * Patient in the system. This class holds the generic person things that both the stubs and
@@ -81,6 +83,19 @@ public class Person extends BaseOpenmrsData implements java.io.Serializable {
 	private String personVoidReason;
 	
 	private boolean isPatient;
+
+	//Nipun - work starts
+	@Transient
+	private Boolean unknown;
+
+	public Boolean getUnknown() {
+		return unknown;
+	}
+
+	public void setUnknown(Boolean unknown) {
+		this.unknown = unknown;
+	}
+	//Nipun - work ends
 	
 	/**
 	 * Convenience map from PersonAttributeType.name to PersonAttribute.<br>

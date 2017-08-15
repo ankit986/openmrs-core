@@ -56,7 +56,7 @@ public class PersonNameValidator implements Validator {
 			if (personName == null) {
 				errors.reject("error.name");
 			} else if (!personName.isVoided()) {
-				validatePersonName(personName, errors, false, true);
+				//validatePersonName(personName, errors, false, true);
 			}
 		}
 		catch (Exception e) {
@@ -118,7 +118,12 @@ public class PersonNameValidator implements Validator {
 	 * @should not validate against regex for blank names
 	 */
 	public void validatePersonName(PersonName personName, Errors errors, boolean arrayInd, boolean testInd) {
-		
+
+//		//Nipun - work starts
+//		if (person.getUnknown() != null && person.getUnknown()) {
+//			atLeastOneNonVoidPersonNameLeft = true;
+//		}
+//		//Nipun - work ends
 		if (personName == null) {
 			errors.reject("error.name");
 			return;

@@ -24,22 +24,7 @@ import java.util.Vector;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Concept;
-import org.openmrs.Encounter;
-import org.openmrs.Location;
-import org.openmrs.Obs;
-import org.openmrs.Order;
-import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
-import org.openmrs.PatientIdentifierType;
-import org.openmrs.PatientProgram;
-import org.openmrs.Person;
-import org.openmrs.PersonAddress;
-import org.openmrs.PersonAttribute;
-import org.openmrs.PersonName;
-import org.openmrs.Relationship;
-import org.openmrs.User;
-import org.openmrs.Visit;
+import org.openmrs.*;
 import org.openmrs.api.APIException;
 import org.openmrs.api.BlankIdentifierException;
 import org.openmrs.api.DuplicateIdentifierException;
@@ -68,10 +53,6 @@ import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.validator.PatientIdentifierValidator;
 import org.springframework.transaction.annotation.Transactional;
-
-import org.openmrs.Allergy;
-import org.openmrs.Allergies;
-import org.openmrs.Allergen;
 
 /**
  * Default implementation of the patient service. This class should not be used on its own. The
@@ -115,7 +96,39 @@ public class PatientServiceImpl extends BaseOpenmrsService implements PatientSer
 	/**
 	 * @see org.openmrs.api.PatientService#savePatient(org.openmrs.Patient)
 	 */
+	//Nipun - work starts
+			PersonService personService = new PersonServiceImpl();
+ 	//Nipun - work ends
 	public Patient savePatient(Patient patient) throws APIException {
+
+		//Nipun - work starts
+
+		//PersonName personName = new PersonName();
+		//if (unknown != null && unknown) {
+		if (patient.getUnknown() != null && patient.getUnknown()) {
+//			PersonName personName = patient.getPersonName();
+			patient.getPersonName().setFamilyName("UNKNOWN");
+			patient.getPersonName().setGivenName("UNKNOWN");
+
+
+//			personName.setFamilyName("UNKNOWN"); //commenting, changing the originally added empty name to unknowm, instead of adding anew name
+//			personName.setGivenName("UNKNOWN");
+//			patient.addName(personName);
+
+			//patient.addAttribute(new PersonAttribute(emrApiProperties.getUnknownPatientPersonAttributeType(), "true"));
+			//work on addingAttribute - core can not depend on the relevant module. therefore rewriting that...
+			PersonAttributeType type = null;
+			type = this.personService.getPersonAttributeTypeByName("Unknown patient");
+			if(type == null) {
+				throw new IllegalStateException("Configuration required: Unknown patient");
+			} else {
+				patient.addAttribute(new PersonAttribute(type, "true"));
+			}
+		}
+//		patient.addName(personName); commenting to avoid adding an empty name field for known patients.
+
+		//Nipun - work ends
+
 		if (patient.getPatientId() == null) {
 			Context.requirePrivilege(PrivilegeConstants.ADD_PATIENTS);
 		} else {
