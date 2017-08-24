@@ -77,11 +77,6 @@ public class PersonValidator implements Validator {
 			errors.popNestedPath();
 			index++;
 		}
-		//Nipun - work starts - think we can remove this exception now.
-//		if (person.getUnknown() != null && person.getUnknown()) {
-//			atLeastOneNonVoidPersonNameLeft = true;
-//		} //commenting since an empty name string is added to unknown patients in the regapp.
-		//Nipun - work ends
 		if (!person.isVoided() && !atLeastOneNonVoidPersonNameLeft) {
 			errors.rejectValue("names", "Person.shouldHaveAtleastOneNonVoidedName");
 		}

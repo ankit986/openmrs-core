@@ -56,7 +56,10 @@ public class PersonNameValidator implements Validator {
 			if (personName == null) {
 				errors.reject("error.name");
 			} else if (!personName.isVoided()) {
-				//validatePersonName(personName, errors, false, true);
+				/**
+				 * TODO Ignore name validation only for unknown patients
+				 */
+//				validatePersonName(personName, errors, false, true);
 			}
 		}
 		catch (Exception e) {
@@ -119,11 +122,6 @@ public class PersonNameValidator implements Validator {
 	 */
 	public void validatePersonName(PersonName personName, Errors errors, boolean arrayInd, boolean testInd) {
 
-//		//Nipun - work starts
-//		if (person.getUnknown() != null && person.getUnknown()) {
-//			atLeastOneNonVoidPersonNameLeft = true;
-//		}
-//		//Nipun - work ends
 		if (personName == null) {
 			errors.reject("error.name");
 			return;

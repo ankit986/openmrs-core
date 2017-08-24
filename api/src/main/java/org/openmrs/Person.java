@@ -84,19 +84,9 @@ public class Person extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private boolean isPatient;
 
-	//Nipun - work starts
 	@Transient
 	private Boolean unknown;
 
-	public Boolean getUnknown() {
-		return unknown;
-	}
-
-	public void setUnknown(Boolean unknown) {
-		this.unknown = unknown;
-	}
-	//Nipun - work ends
-	
 	/**
 	 * Convenience map from PersonAttributeType.name to PersonAttribute.<br>
 	 * <br>
@@ -409,6 +399,22 @@ public class Person extends BaseOpenmrsData implements java.io.Serializable {
 		this.attributes = attributes;
 		attributeMap = null;
 		allAttributeMap = null;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public Boolean getUnknown() {
+		return unknown;
+	}
+
+	/**
+	 *
+	 * @param unknown
+	 */
+	public void setUnknown(Boolean unknown) {
+		this.unknown = unknown;
 	}
 	
 	// Convenience methods
